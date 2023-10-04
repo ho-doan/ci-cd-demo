@@ -25,6 +25,9 @@ jobs:
     - name: Install Bundler
       run: gem install bundler
 
+    - name: Update bundle
+      run: gem update --system 3.2.3
+
     - name: Install dependencies
       run: bundle install
 
