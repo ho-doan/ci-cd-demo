@@ -27,10 +27,10 @@ jobs:
       continue-on-error: true
 
     - name: Upload Text File Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: cspell
-          path: cspell_report.log
+      uses: actions/upload-artifact@v2
+      with:
+        name: cspell
+        path: cspell_report.log
 
     # - name: report cspell
     #   uses: dorny/test-reporter@v1
