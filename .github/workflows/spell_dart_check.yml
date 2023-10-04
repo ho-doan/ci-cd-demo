@@ -28,14 +28,8 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart > cspell_report.txt
+      run: cspell **/*.dart --reporter @cspell/cspell-json-reporter > cspell_report.txt
       continue-on-error: true
-
-    # - name: Upload Text File Artifact
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: cspell
-    #     path: cspell_report.txt
     
     - name: Read Comment Text from File
       id: comment
