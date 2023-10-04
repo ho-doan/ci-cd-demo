@@ -1,3 +1,41 @@
+# name: Spell Check Pull Request
+
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#       - synchronize
+
+# jobs:
+#   spell-check:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     - name: Set up Python
+#       uses: actions/setup-python@v2
+#       with:
+#         python-version: 3.11.6
+
+#     - name: Install codespell
+#       run: pip install codespell
+
+#     - name: spell check
+#       run: codespell **/*.dart --skip="*.g.dart"
+
+#     - name: Spell check results
+#       run: cat codespell_results.txt
+
+#     - name: report test
+#       uses: dorny/test-reporter@v1
+#       with:
+#         name: 'spell check'
+#         path: 'codespell_results.txt'
+#         reporter: 'flutter-json'
+#         fail-on-error: 'false'
+
 name: Spell Check Pull Request
 
 on:
@@ -14,24 +52,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        python-version: 3.11.6
+        node-version: 14
 
     - name: Install codespell
-      run: pip install codespell
+      run: npm install -g codespell
 
-    - name: spell check
-      run: codespell **/*.dart --skip="*.g.dart"
+    - name: Install @cspell/dict-dart dictionary
+      run: npm install -g @cspell/dict-dart
+
+    - name: Spell check
+      run: codespell --dictionary @cspell/dict-dart --quiet --skip=".git,*.pdf,*.png,*.jpg,*.jpeg,*.gif,*.ico,*.svg,*.zip,*.gz,*.tar,*.tgz,*.rar,*.jar,*.exe,*.dll,*.so,*.a,*.o,*.ko,*.pyc,*.pyo,*.mo,*.po,*.pot,*.eps,*.ps,*.docx,*.xlsx,*.pptx" .
 
     - name: Spell check results
       run: cat codespell_results.txt
-
-    - name: report test
-      uses: dorny/test-reporter@v1
-      with:
-        name: 'spell check'
-        path: 'codespell_results.txt'
-        reporter: 'flutter-json'
-        fail-on-error: 'false'
