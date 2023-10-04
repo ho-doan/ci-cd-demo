@@ -28,7 +28,7 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart > cspell_report.txt
+      run: cspell **/*.dart --reporter @cspell/cspell-json-reporter > cspell_report.txt
       continue-on-error: true
     
     - name: Read Comment Text from File
