@@ -35,21 +35,21 @@ jobs:
     - name: Read Comment Text from File
       id: comment
       run: |
-        echo "comment=$(cat cspell_report.txt)" >> $GITHUB_OUTPUT
+        SCRIPT_OUTPUT=$(cat cspell_report.txt)"
+        echo "$SCRIPT_OUTPUT" >> $GITHUB_ENV
+        echo "${{env.SCRIPT_OUTPUT}}"
+        echo $SCRIPT_OUTPUT
 
     - name: Post Comment
-      uses: actions/github-script@v6
+      uses: actions/github-script@v5
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const comment = `Comment from File:\n\n${process.env.comment}`;
-          const context = github.context;
-
           await github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
-            body: comment,
+            body: `${{ env.SCRIPT_OUTPUT }}`,
           });
 
     # - name: report cspell
