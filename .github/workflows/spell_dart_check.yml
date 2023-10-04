@@ -41,8 +41,8 @@ jobs:
       id: comment
       run: |
         report = cat cspell_report.txt
-        echo "::set-output name=comment::$({ report })"
-        echo "comment='$({ report })'" >> $GITHUB_OUTPUT
+        echo "::set-output name=comment::$({ $report })"
+        echo "comment='$({ $report })'" >> $GITHUB_OUTPUT
 
     - name: Read Comment Text
       run: |
