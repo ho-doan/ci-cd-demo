@@ -34,7 +34,7 @@ jobs:
     - name: Read Comment Text from File
       id: comment
       run: |
-        echo "comment=$( cat cspell_report.txt )" >> $GITHUB_OUTPUT
+        echo "comment<<EOF'$( cat cspell_report.txt )EOF >> $GITHUB_OUTPUT
 
     - name: Read Comment Text
       run: |
