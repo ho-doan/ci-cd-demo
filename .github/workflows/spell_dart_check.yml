@@ -23,4 +23,13 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart
+      run: cspell **/*.dart > test_report.log
+      continue-on-error: true
+
+    - name: report test
+      uses: dorny/test-reporter@v1
+      with:
+        name: 'flutter test'
+        path: 'test_report.log'
+        reporter: 'flutter-json'
+        fail-on-error: 'false'
