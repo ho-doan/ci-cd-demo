@@ -37,10 +37,11 @@ jobs:
     
     - name: Read Comment Text from File
       id: comment
-      run: echo "::set-output name=comment::$(cat cspell_report.txt)"
+      run: |
+        echo "::set-output name=comment::$(cat cspell_report.txt)"
 
     - name: Post Comment
-      uses: actions/github-script@5.0.0
+      uses: actions/github-script@v6
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
