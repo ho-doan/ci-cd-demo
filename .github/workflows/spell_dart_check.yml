@@ -9,18 +9,21 @@ on:
 jobs:
   spell-check:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        python-version: 3.x
+        ruby-version: 2.x # Specify the Ruby version you need
 
-    - name: Install codespell
-      run: pip install codespell
+    - name: Install Bundler
+      run: gem install bundler
+
+    - name: Install dependencies
+      run: bundle install
 
     - name: Spell check
-      run: codespell client/lib/ *.dart --skip="*.json"
+      run: bundle exec spellcheck --format=plain "**/*.dart"
