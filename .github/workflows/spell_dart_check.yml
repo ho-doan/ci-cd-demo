@@ -40,7 +40,7 @@ jobs:
       run: echo "::set-output name=comment::$(cat cspell_report.txt)"
 
     - name: Post Comment
-      uses: actions/github-script@v4
+      uses: actions/github-script@5.0.0
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
