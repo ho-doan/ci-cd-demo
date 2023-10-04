@@ -35,10 +35,7 @@ jobs:
     - name: Read Comment Text from File
       id: comment
       run: |
-        SCRIPT_OUTPUT=$(cat cspell_report.txt)"
-        echo "$SCRIPT_OUTPUT" >> $GITHUB_ENV
-        echo "${{env.SCRIPT_OUTPUT}}"
-        echo $SCRIPT_OUTPUT
+        echo "::set-output name=comment::$(cat cspell_report.txt)"
 
     - name: Post Comment
       uses: actions/github-script@v5
@@ -49,7 +46,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
-            body: `${{ env.SCRIPT_OUTPUT }}`,
+            body: `${{ env.comment }}`,
           });
 
     # - name: report cspell
