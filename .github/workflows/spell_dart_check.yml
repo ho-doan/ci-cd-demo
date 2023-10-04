@@ -23,4 +23,4 @@ jobs:
       run: pip install codespell
 
     - name: Spell check
-      run: codespell *.dart
+      run: codespell *.dart -I
