@@ -40,7 +40,7 @@ jobs:
     - name: Read Comment Text from File
       id: comment
       run: |
-        echo "comment='<<EOF\n$(cat cspell_report.txt)\nEOF'" >> $GITHUB_OUTPUT
+        echo "::set-output name=comment::$(cat cspell_report.txt)"
 
     - name: Read Comment Text
       run: |
