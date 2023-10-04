@@ -23,5 +23,4 @@ jobs:
       run: pip install codespell
 
     - name: Spell check
-      run: |
-        find . -type f -name "*.dart" | xargs codespell
+      run: codespell *.dart
