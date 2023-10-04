@@ -23,7 +23,7 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart --reporter @cspell/cspell-json-reporter > cspell_report.log
+      run: cspell **/*.dart --reporter > cspell_report.log
       continue-on-error: true
 
     - name: Upload Text File Artifact
