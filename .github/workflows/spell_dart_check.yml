@@ -23,17 +23,36 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart > cspell_report.log
+      run: cspell **/*.dart > cspell_report.txt
       continue-on-error: true
 
     - name: echo cspell_report
-      run: echo cspell_report.log
+      run: echo cspell_report.txt
 
     - name: Upload Text File Artifact
       uses: actions/upload-artifact@v2
       with:
         name: cspell
-        path: cspell_report.log
+        path: cspell_report.txt
+    
+    - name: Read Comment Text from File
+      id: comment
+      run: echo "::set-output name=comment::$(cat cspell_report.txt)"
+
+    - name: Post Comment
+      uses: actions/github-script@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const comment = `Comment from File:\n\n${process.env.comment}`;
+          const context = github.context;
+
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: comment,
+          });
 
     # - name: report cspell
     #   uses: dorny/test-reporter@v1
