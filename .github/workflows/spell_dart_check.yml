@@ -23,4 +23,4 @@ jobs:
       run: pip install codespell
 
     - name: Spell check
-      run: codespell client/lib/ *.dart --skip="*.g.dart,*.json"
+      run: codespell client/lib/ *.dart --skip="*.json"
