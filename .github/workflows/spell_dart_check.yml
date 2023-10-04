@@ -23,13 +23,19 @@ jobs:
       run: npm install -g cspell
 
     - name: Spell check
-      run: cspell **/*.dart --reporter @cspell/cspell-json-reporter > test_report.log
+      run: cspell **/*.dart --reporter @cspell/cspell-json-reporter > cspell_report.log
       continue-on-error: true
 
-    - name: report cspell
-      uses: dorny/test-reporter@v1
-      with:
-        name: 'flutter cspell'
-        path: 'test_report.log'
-        reporter: 'flutter-json'
-        fail-on-error: 'false'
+    - name: Upload Text File Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cspell
+          path: cspell_report.log
+
+    # - name: report cspell
+    #   uses: dorny/test-reporter@v1
+    #   with:
+    #     name: 'flutter cspell'
+    #     path: 'test_report.log'
+    #     reporter: 'flutter-json'
+    #     fail-on-error: 'false'
