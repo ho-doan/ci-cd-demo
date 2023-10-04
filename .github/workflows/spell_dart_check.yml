@@ -26,6 +26,9 @@ jobs:
       run: cspell **/*.dart > cspell_report.log
       continue-on-error: true
 
+    - name: echo cspell_report
+    run: echo cspell_report.log
+
     - name: Upload Text File Artifact
       uses: actions/upload-artifact@v2
       with:
