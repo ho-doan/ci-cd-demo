@@ -1,0 +1,36 @@
+name: Spell Check Dart Files
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install codespell
+      run: pip install codespell
+
+    - name: Spell check
+      run: codespell client/lib/ --check-filenames --skip="*.g.dart,*.json"
+
+    - name: Commit spell check changes
+      run: git diff --name-only | xargs git add
+
+    - name: Push changes
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git commit -m "Fix spelling errors"
+        git push
