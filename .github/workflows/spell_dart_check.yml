@@ -24,13 +24,3 @@ jobs:
 
     - name: Spell check
       run: codespell client/lib/ --check-filenames --skip="*.g.dart,*.json"
-
-    - name: Commit spell check changes
-      run: git diff --name-only | xargs git add
-
-    - name: Push changes
-      run: |
-        git config --global user.name "${{ github.actor }}"
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git commit -m "Fix spelling errors"
-        git push
