@@ -6,6 +6,9 @@ on:
       - opened
       - synchronize
 
+env:
+  RUBY_VERSION: 2.6
+
 jobs:
   spell-check:
     runs-on: ubuntu-latest
@@ -17,7 +20,7 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.x # Specify the Ruby version you need
+        ruby-version: ${{ env.RUBY_VERSION }}
 
     - name: Install Bundler
       run: gem install bundler
