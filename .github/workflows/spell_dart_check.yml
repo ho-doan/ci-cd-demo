@@ -6,9 +6,6 @@ on:
       - opened
       - synchronize
 
-env:
-  RUBY_VERSION: 3.2.2
-
 jobs:
   spell-check:
     runs-on: ubuntu-latest
@@ -17,20 +14,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        ruby-version: ${{ env.RUBY_VERSION }}
-        bundler-cache: true
+        python-version: 3.2.2
 
-    - name: Install Bundler
-      run: gem install bundler
-
-    # - name: Update bundle
-    #   run: gem update --system 3.2.3
-
-    - name: Install dependencies
-      run: bundle install
+    - name: Install codespell
+      run: pip install codespell
 
     - name: Spell check
-      run: bundle exec spellcheck --format=plain "**/*.dart"
+      run: |
+        find . -type f -name "*.dart" | xargs codespell
