@@ -1,0 +1,53 @@
+{
+    "issues": [
+        {
+            "text": "lophoc",
+            "offset": 737,
+            "line": {
+                "text": "  final lophoc = 'hahahaaaa';\n",
+                "offset": 729
+            },
+            "length": 6,
+            "isFlagged": false,
+            "isFound": false,
+            "row": 35,
+            "col": 9,
+            "uri": "file:///Users/hodoan/Documents/code/flutter_source/source_test/ci-cd-demo/client/lib/main.dart",
+            "context": {
+                "text": "  final lophoc = 'hahahaaaa';",
+                "offset": 729
+            }
+        },
+        {
+            "text": "hahahaaaa",
+            "offset": 747,
+            "line": {
+                "text": "  final lophoc = 'hahahaaaa';\n",
+                "offset": 729
+            },
+            "length": 9,
+            "isFlagged": false,
+            "isFound": false,
+            "row": 35,
+            "col": 19,
+            "uri": "file:///Users/hodoan/Documents/code/flutter_source/source_test/ci-cd-demo/client/lib/main.dart",
+            "context": {
+                "text": "  final lophoc = 'hahahaaaa';",
+                "offset": 729
+            }
+        }
+    ],
+    "info": [],
+    "debug": [],
+    "error": [],
+    "progress": [],
+    "result": {
+        "files": 2,
+        "filesWithIssues": [
+            "/Users/hodoan/Documents/code/flutter_source/source_test/ci-cd-demo/client/lib/main.dart"
+        ],
+        "issues": 2,
+        "errors": 0,
+        "cachedFiles": 0
+    }
+}
