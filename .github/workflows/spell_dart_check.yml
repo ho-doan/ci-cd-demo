@@ -22,16 +22,16 @@ jobs:
     - name: Install codespell
       run: pip install codespell
 
-    - name: Spell check
+    - name: spell check
       run: codespell **/*.dart --skip="*.g.dart"
 
     - name: Spell check results
       run: cat codespell_results.txt
 
     - name: report test
-        uses: dorny/test-reporter@v1
-        with:
-          name: 'flutter test'
-          path: 'codespell_results.txt'
-          reporter: 'flutter-json'
-          fail-on-error: 'false'
+      uses: dorny/test-reporter@v1
+      with:
+        name: 'spell check'
+        path: 'codespell_results.txt'
+        reporter: 'flutter-json'
+        fail-on-error: 'false'
