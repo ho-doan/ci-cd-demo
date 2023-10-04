@@ -7,7 +7,7 @@ on:
       - synchronize
 
 env:
-  RUBY_VERSION: 2.6
+  RUBY_VERSION: 3.2.3
 
 jobs:
   spell-check:
