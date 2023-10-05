@@ -30,12 +30,11 @@ jobs:
 
       - name: Read Comment Text from File
         id: vars
+        if: failure()
         run: |
-          if [ $? -eq 1 ]; then
-            echo 'analyze<<EOF' >> $GITHUB_OUTPUT
-            cat analyze.txt >> $GITHUB_OUTPUT   
-            echo 'EOF' >> $GITHUB_OUTPUT
-          fi
+          echo 'analyze<<EOF' >> $GITHUB_OUTPUT
+          cat analyze.txt >> $GITHUB_OUTPUT   
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Post Comment
         uses: actions/github-script@v5
