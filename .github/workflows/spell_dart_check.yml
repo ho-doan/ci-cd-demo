@@ -40,7 +40,7 @@ jobs:
 
     - name: Read Comment Text
       run: |
-        echo ${{ steps.vars.outputs.comment }}
+        echo ${{ steps.comment.outputs.comment }}
         echo ${{ env.comment }}
 
     - name: Post Comment
@@ -52,7 +52,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
-            body: `${{ env.comment }}`,
+            body: `data = ${{ env.comment }}`,
           });
 
     # - name: report cspell
