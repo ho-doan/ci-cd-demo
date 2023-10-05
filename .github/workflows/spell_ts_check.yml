@@ -1,0 +1,57 @@
+name: Spell Check Server
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20
+
+    - name: Install cspell
+      run: npm install -g cspell
+
+    - name: Spell check
+      id: test
+      run: cspell server/src/**/*.ts -c ./cspell.json > cspell_report.txt
+      continue-on-error: true
+    
+    - name: Read Comment Text from File
+      id: vars
+      run: |
+        echo 'comment<<EOF' >> $GITHUB_OUTPUT
+        cat cspell_report.txt >> $GITHUB_OUTPUT   
+        echo 'EOF' >> $GITHUB_OUTPUT
+
+    - name: Post Comment
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: `${{ steps.vars.outputs.comment }}`,
+          });
+    - name: Read Comment Text from File
+      if: steps.test.outcome != 'success'
+      run: |
+        exit 1
+    # spell:disable & -c ./cspell.json

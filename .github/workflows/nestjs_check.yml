@@ -1,0 +1,59 @@
+name: Nestjs
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+            node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./server
+      
+      - name: Run tests
+        id: test
+        run: npm run test > test.txt
+        working-directory: ./server
+        continue-on-error: true
+
+      - name: Read Comment Text from File
+        id: vars
+        if: steps.test.outcome != 'success'
+        run: |
+          echo 'test<<EOF' >> $GITHUB_OUTPUT
+          cat ./server/test.txt >> $GITHUB_OUTPUT   
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - name: Post Comment
+        uses: actions/github-script@v5
+        if: steps.test.outcome != 'success'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `${{ steps.vars.outputs.test }}`,
+            });
+      - name: Read Comment Text from File
+        if: steps.test.outcome != 'success'
+        run: |
+          exit 1
