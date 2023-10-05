@@ -1,0 +1,60 @@
+name: Flutter Test
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.3'
+          channel: 'stable'
+      - run: flutter --version
+
+      - name: pub get
+        run: flutter pub get
+        working-directory: ./client
+
+      - name: Test project source
+        id: test
+        run: flutter test --no-pub > test.txt
+        working-directory: ./client
+        continue-on-error: true
+
+      - name: Read Comment Text from File
+        id: vars
+        if: steps.test.outcome != 'success'
+        run: |
+          echo 'test<<EOF' >> $GITHUB_OUTPUT
+          cat ./client/test.txt >> $GITHUB_OUTPUT   
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - name: Post Comment
+        uses: actions/github-script@v5
+        if: steps.test.outcome != 'success'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `${{ steps.vars.outputs.test }}`,
+            });
+      - name: Read Comment Text from File
+        if: steps.test.outcome != 'success'
+        run: |
+          exit 1
