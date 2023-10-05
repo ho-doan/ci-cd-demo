@@ -49,28 +49,3 @@ jobs:
             issue_number: context.issue.number,
             body: `${{ steps.vars.outputs.comment }}`,
           });
-
-    - name: Generate Review Comment
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Define your review comment message here
-        COMMENT="This is an automated review comment."
-
-        # Extract relevant information from the event payload
-        PR_URL=$(jq -r .pull_request.url "$GITHUB_EVENT_PATH")
-
-        # Create the review comment using the GitHub API
-        curl -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "$PR_URL/reviews" \
-          -d "{\"body\": \"$COMMENT\"}"
-
-    # - name: report cspell
-    #   uses: dorny/test-reporter@v1
-    #   with:
-    #     name: 'flutter cspell'
-    #     path: 'test_report.log'
-    #     reporter: 'flutter-json'
-    #     fail-on-error: 'false'
