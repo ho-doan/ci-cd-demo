@@ -41,6 +41,8 @@ jobs:
     - name: Read Comment Text
       run: |
         echo ${{ steps.vars.outputs.comment }}
+        echo ${{ env.comment }}
+        echo ${{ process.env.comment }}
 
     - name: Post Comment
       uses: actions/github-script@v5
