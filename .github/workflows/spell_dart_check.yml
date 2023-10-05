@@ -47,14 +47,8 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
-            body: `data = ${{ steps.vars.outputs.comment }}`,
+            body: `${{ steps.vars.outputs.comment }}`,
           });
-    
-    - name: Grading results
-      uses: githubtraining/looking-glass-action@v1.0.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        feedback: ${{ steps.vars.outputs.reports }}
 
     # - name: report cspell
     #   uses: dorny/test-reporter@v1
