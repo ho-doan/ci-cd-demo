@@ -54,3 +54,4 @@ jobs:
       if: steps.test.outcome != 'success'
       run: |
         exit 1
+    # spell:disable & -c ./cspell.json
