@@ -1,0 +1,4 @@
+Analyzing ci-cd-demo...                                         
+
+warning • Required named parameters should be before optional named parameters • client/lib/main.dart:24:46 • always_put_required_named_parameters_first
+
