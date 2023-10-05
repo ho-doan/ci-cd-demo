@@ -28,17 +28,15 @@ jobs:
       - name: Read Comment Text from File
         id: vars
         if: steps.analyze.outcome != 'success'
-        working-directory: ./client
         run: |
           echo 'analyze<<EOF' >> $GITHUB_OUTPUT
-          cat analyze.txt >> $GITHUB_OUTPUT   
+          cat ./client/analyze.txt >> $GITHUB_OUTPUT   
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - name: Post Comment
         uses: actions/github-script@v5
         if: steps.analyze.outcome != 'success'
         with:
-          working-directory: ./client
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
