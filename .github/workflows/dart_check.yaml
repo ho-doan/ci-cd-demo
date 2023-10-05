@@ -21,9 +21,12 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: ./client
 
       - name: Analyze project source
         run: flutter analyze > analyze.log
+        working-directory: ./client
 
       - name: Run tests
         run: flutter test > test.log
+        working-directory: ./client
