@@ -20,13 +20,14 @@ jobs:
       - run: flutter --version
 
       - name: Analyze project source
+        id: analyze
         run: flutter analyze --no-pub > analyze.txt
         working-directory: ./client
-        # continue-on-error: true
+        continue-on-error: true
 
       - name: Read Comment Text from File
         id: vars
-        if: failure()
+        if: steps.analyze.outcome != 'success'
         run: |
           echo 'analyze<<EOF' >> $GITHUB_OUTPUT
           cat analyze.txt >> $GITHUB_OUTPUT   
@@ -34,7 +35,7 @@ jobs:
 
       - name: Post Comment
         uses: actions/github-script@v5
-        if: failure()
+        if: steps.analyze.outcome != 'success'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
