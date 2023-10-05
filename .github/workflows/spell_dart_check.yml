@@ -38,10 +38,10 @@ jobs:
         cat cspell_report.txt >> $GITHUB_OUTPUT   
         echo 'EOF' >> $GITHUB_OUTPUT
 
-    - name: Read Comment Text
-      run: |
-        echo ${{ steps.comment.outputs.comment }}
-        echo ${{ env.comment }}
+    # - name: Read Comment Text
+    #   run: |
+    #     echo ${{ steps.comment.outputs.comment }}
+    #     echo ${{ env.comment }}
 
     - name: Post Comment
       uses: actions/github-script@v5
@@ -52,7 +52,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: context.issue.number,
-            body: `data = ${{ env.comment }}`,
+            body: `data = ${{ steps.comment.outputs.comment }}`,
           });
 
     # - name: report cspell
