@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-//hợp đồng
+//spell-checker:disable hợp đồng
 export class CreateContractDto {
 @ApiProperty({
     description: 'start day',
