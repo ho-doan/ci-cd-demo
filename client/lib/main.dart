@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({required this.title, super.key});
 
   final String title;
 
@@ -30,9 +30,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // spell:ignore Hợp đồng
   int _counter = 0;
 
-  final lophoc = 'hahahaaaa';
+  final ffaff = 'ffffffffffaaaa';
+
+  final helloWork = 'ak afk';
+
+  final hihi = 'haha';
 
   void _incrementCounter() {
     setState(() {
